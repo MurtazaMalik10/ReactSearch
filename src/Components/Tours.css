@@ -1,98 +1,157 @@
-/* src/Components/Tours.css */
-
 /* General Styles */
 .tours-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .content.with-sidebar {
-    margin-left: 350px; /* Adjust this if needed */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-  .sidebar {
-    position: fixed;
-    width: 250px;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: #f8f9fa;
-    transition: transform 0.3s ease;
-    transform: translateX(-250px); /* Hide the sidebar by default */
+.content.with-sidebar {
+  margin-left: 350px; /* Adjust this if needed */
+}
+
+.sidebar {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #f8f9fa;
+  transition: transform 0.3s ease;
+  transform: translateX(-250px); /* Hide the sidebar by default */
 }
 
 .sidebar.open {
-    transform: translateX(0); /* Show the sidebar */
+  transform: translateX(0); /* Show the sidebar */
 }
-  
-  .sidebar .filter-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* Arrow styles */
-  .arrow {
-    position: absolute;
-    top: 20px;
-    right: -30px;
-    width: 30px;
-    height: 30px;
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    line-height: 30px;
-    cursor: pointer;
-    border-radius: 50%;
-    font-size: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+.sidebar .filter-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Arrow styles */
+.arrow {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  width: 30px;
+  height: 30px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .arrow:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
-  
-  .arrow.open {
-    transform: rotate(180deg);
-  }
-  
-  /* Card styles */
-  .card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-  }
-  
-  .card-img-top {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    height: 180px;
-    object-fit: cover;
-  }
-  
-  .card-body {
-    padding: 15px;
-  }
-  
-  .card-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .card-text {
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Responsive Layout */
-  @media (max-width: 768px) {
-    .content.with-sidebar {
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Tour Container */
+.tours-container {
+  padding: 20px;
+}
+
+/* Card Styles */
+.tour-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.tour-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.card-text strong {
+  color: #333;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .content.with-sidebar {
       margin-left: 0;
-    }
   }
-  
+
+  .sidebar {
+      width: 200px;
+  }
+
+  .arrow {
+      right: -20px;
+      width: 25px;
+      height: 25px;
+      font-size: 16px;
+  }
+
+  .card-img-top {
+      height: 150px;
+  }
+}
+
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin: 0 5px;
+  background-color: #fff;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .active {
+  background-color: #007bff;
+  color: #fff;
+  cursor: default;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

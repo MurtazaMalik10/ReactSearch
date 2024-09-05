@@ -1,30 +1,48 @@
 import React, { useState } from 'react';
-import './Filter.css'; // Ensure you create corresponding CSS for styling
+import './Filter.css'; // Ensure you have styling for the filter component
 
-const Filter = () => {
-  const [filters, setFilters] = useState({
+const Filter = ({ onFilterChange }) => {
+  const defaultFilters = {
     services: [],
     locations: [],
     viewpoints: [],
-    priceRange: [0, 5000], // Example range
-    daysRange: [1, 30] // Example range
-  });
+    priceRange: [0, 5000], // Default price range
+    daysRange: [1, 30] // Default number of days range
+  };
 
+  const [filters, setFilters] = useState(defaultFilters);
+
+  // Handle checkbox selection for services, locations, and viewpoints
   const handleCheckboxChange = (category, value) => {
     setFilters(prevFilters => {
-      const newCategory = prevFilters[category].includes(value)
+      const updatedCategory = prevFilters[category].includes(value)
         ? prevFilters[category].filter(item => item !== value)
         : [...prevFilters[category], value];
 
-      return { ...prevFilters, [category]: newCategory };
+      const updatedFilters = { ...prevFilters, [category]: updatedCategory };
+      onFilterChange(updatedFilters); // Pass updated filters to parent
+      return updatedFilters;
     });
   };
 
-  const handleRangeChange = (rangeType, value) => {
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [rangeType]: value
-    }));
+  // Handle range sliders (price and days)
+  const handleRangeChange = (rangeType, newRange) => {
+    setFilters(prevFilters => {
+      const updatedFilters = { ...prevFilters, [rangeType]: newRange };
+      onFilterChange(updatedFilters); // Pass updated filters to parent
+      return updatedFilters;
+    });
+  };
+
+  // Trigger filter change whenever a filter is modified
+  const applyFilters = () => {
+    onFilterChange(filters);
+  };
+
+  // Reset all filters to default values
+  const resetFilters = () => {
+    setFilters(defaultFilters);
+    onFilterChange(defaultFilters); // Pass default filters to parent
   };
 
   return (
@@ -37,6 +55,7 @@ const Filter = () => {
         <label>
           <input
             type="checkbox"
+            checked={filters.services.includes('Transportation')}
             onChange={() => handleCheckboxChange('services', 'Transportation')}
           />
           Transportation
@@ -44,6 +63,7 @@ const Filter = () => {
         <label>
           <input
             type="checkbox"
+            checked={filters.services.includes('Accommodation')}
             onChange={() => handleCheckboxChange('services', 'Accommodation')}
           />
           Accommodation
@@ -51,6 +71,7 @@ const Filter = () => {
         <label>
           <input
             type="checkbox"
+            checked={filters.services.includes('Guide')}
             onChange={() => handleCheckboxChange('services', 'Guide')}
           />
           Guide
@@ -64,6 +85,7 @@ const Filter = () => {
         <label>
           <input
             type="checkbox"
+            checked={filters.locations.includes('Hunza Valley')}
             onChange={() => handleCheckboxChange('locations', 'Hunza Valley')}
           />
           Hunza Valley
@@ -71,6 +93,7 @@ const Filter = () => {
         <label>
           <input
             type="checkbox"
+            checked={filters.locations.includes('Skardu')}
             onChange={() => handleCheckboxChange('locations', 'Skardu')}
           />
           Skardu
@@ -84,6 +107,7 @@ const Filter = () => {
         <label>
           <input
             type="checkbox"
+            checked={filters.viewpoints.includes('Baltit Fort')}
             onChange={() => handleCheckboxChange('viewpoints', 'Baltit Fort')}
           />
           Baltit Fort
@@ -91,6 +115,7 @@ const Filter = () => {
         <label>
           <input
             type="checkbox"
+            checked={filters.viewpoints.includes('Nanga Parbat')}
             onChange={() => handleCheckboxChange('viewpoints', 'Nanga Parbat')}
           />
           Nanga Parbat
@@ -137,6 +162,9 @@ const Filter = () => {
         />
         <p>Days: {filters.daysRange[0]} - {filters.daysRange[1]}</p>
       </div>
+
+      <button className="apply-filter-button" onClick={applyFilters}>Apply Filters</button>
+      <button className="reset-filter-button" onClick={resetFilters}>Reset Filters</button>
     </div>
   );
 };

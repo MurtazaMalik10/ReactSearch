@@ -2,9 +2,24 @@ import React, { useState } from 'react';
 import './HomePage.css';
 import Navbar from './Navbar';
 import backgroundImage from '../assets/cityscape.jpg';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-function HomePage() {
+function HomePage({ onSearch }) {
+  const [location, setLocation] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [price, setPrice] = useState(5000); // Initial price
+
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // Send the search criteria to the parent component
+    onSearch({ location, fromDate, toDate, price });
+
+    // Navigate to the Tours page
+    navigate('/tours');
+  };
 
   return (
     <div
@@ -22,12 +37,14 @@ function HomePage() {
       <div className="hero-section">
         <div className="search-bar-container">
           <h1>Find Your Next Adventure</h1>
-          <form className="search-form">
+          <form className="search-form" onSubmit={handleSearch}>
             {/* Location Input */}
             <input
               type="text"
               placeholder="Location"
               className="search-input"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
 
             {/* Date Range Picker */}
@@ -35,11 +52,15 @@ function HomePage() {
               type="date"
               placeholder="From"
               className="date-input"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
             />
             <input
               type="date"
               placeholder="To"
               className="date-input"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
             />
 
             {/* Single Price Range Slider */}
